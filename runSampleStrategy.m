@@ -19,6 +19,9 @@ ff3=readtable('ff3.csv');
 crsp=readtable('crspTest.csv');
 % crsp=readtable('crspCompustatMerged_2010_2014_dailyReturns.csv');
 
+% if test file...
+crsp.Properties.VariableNames{'adjustedPrice'} = 'prc';
+
 crsp.datenum=datenum(num2str(crsp.DATE),'yyyymmdd');
 
 %% Calculate momentum size and value
@@ -35,14 +38,16 @@ crsp.momentum=crsp.lag21prc./crsp.lag252prc;
 
 crsp=addRank({'size','value','momentum'},crsp);
 
+params=[20, 50];
+
 %add EWMA rank here
-crsp=addEWMA({'RET'},20,crsp);
-crsp=addEWMA({'RET'},50,crsp);
+crsp=addEWMA({'RET'},params(1),crsp);
+crsp=addEWMA({'RET'},params(2),crsp);
 
 
 
-buy = a > 0 && b > 0;
-sell = a < 0 && b < 0;
+% buy = a > 0 && b > 0;
+% sell = a < 0 && b < 0;
 dateList=unique(crsp.datenum);
 
 %Track strategy positions
