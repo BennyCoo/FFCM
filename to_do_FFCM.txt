@@ -1,0 +1,29 @@
+Provided methods:
+
+addRank
+addLags
+runSampleStrategy
+tradeLongMomentum
+evaluateStrategy
+addEWMA
+
+
+Methods:
+Sharpe Ratio
+alpha
+beta
+information ratio
+Average Holding Period
+Average Turnover
+Market risk premium (SML slope from CAPM model)
+
+Plots:
+Strategy cumulative log returns
+Market cumulative log returns
+
+indicator = linear approximation of momentum
+
+reduce weight in momentum when a certain variable (market performance?/returns on CRSP)
+reach a critical tipping point [reduce holdings]
+
+https://www.mathworks.com/videos/using-matlab-to-optimize-portfolios-with-financial-toolbox-81806.html?elqsid=1511795558303&potential_use=Student
