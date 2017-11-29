@@ -1,15 +1,13 @@
-%% The strategy
-
-% Load ff3 data
+%% Load ff3 data
 ff3=readtable('ff3.csv');
+
+%%
 crsp=readtable('crspTest.csv');
-% crsp=readtable('crspCompustatMerged_2010_2014_dailyReturns.csv');
 
 % if test file...
 % crsp.Properties.VariableNames{'adjustedPrice'} = 'prc';
 
 crsp.datenum=datenum(num2str(crsp.DATE),'yyyymmdd');
-
 
 params=[20, 50];
 
@@ -94,5 +92,5 @@ thisPerformance=evaluateStrategy_m(thisStrategy,ff3);
 save('sampleStrat');
 
 %Plot cumulative returns with dateticks
-% plot(thisPerformance.thisStrategy.datenum,thisPerformance.thisStrategy.cumLogRet);
-% datetick('x','yyyy-mm', 'keepticks', 'keeplimits')
+%plot(thisPerformance.thisStrategy.datenum,thisPerformance.thisStrategy.cumLogRet);
+%datetick('x','yyyy-mm', 'keepticks', 'keeplimits')

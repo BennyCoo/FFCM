@@ -1,0 +1,3 @@
+function portfolio = tradeOnSlope (date, crsp)
+    idx = crsp.
+end

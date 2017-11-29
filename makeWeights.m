@@ -27,7 +27,7 @@ function crsp = makeWeights(crsp)
     totals = zeros(length(uniqueDates), 1);
     
     crsp.Totals = zeros(height(crsp), 1);
-    crsp.Weights = zeros(height(crsp), 1);
+    crsp.w = zeros(height(crsp), 1);
     
     for i = 1:length(uniqueDates)
         date = uniqueDates(i);
@@ -36,10 +36,10 @@ function crsp = makeWeights(crsp)
         
         crsp.Totals(dateidx) = totals(i);
         subrangeOwnership = crsp.Ownership(dateidx);
-        crsp.Weights(dateidx) = subrangeOwnership ./ totals(i);
+        crsp.w(dateidx) = subrangeOwnership ./ totals(i);
         
     end
     
-    crsp.Weights(isnan(crsp.ewma20RET_derived) | isnan(crsp.ewma50RET_derived)) = nan;
+    crsp.w(isnan(crsp.ewma20RET_derived) | isnan(crsp.ewma50RET_derived)) = nan;
     
 end
