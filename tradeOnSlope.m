@@ -9,4 +9,12 @@ isInvestible= isInvestible & ~isnan(crsp.RET);
 %Extrade relevant data from crsp.
 thisCrsp=crsp(isInvestible,:);
 
-portfolio=thisCrsp(:,{'PERMNO','weight','RET'});
+%Standardize investment weights to make sure that 1) There's no short
+%position 
+
+thisCrsp{:,'w'}=0;
+
+% and 2) weights add up to 1.
+
+thisCrsp.w=thisCrsp.Ownership./nansum(thisCrsp.Ownership);
+portfolio=thisCrsp(:,{'PERMNO','w','RET'});
