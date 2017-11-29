@@ -10,6 +10,10 @@ crsp=readtable('crspTest.csv');
 
 crsp.datenum=datenum(num2str(crsp.DATE),'yyyymmdd');
 
+deltaThreshold = 0.001;
+
+buyThreshold = deltaThreshold;
+sellThreshold = -deltaThreshold;
 
 params=[20, 50];
 
@@ -22,8 +26,6 @@ exponentialAverageVariables = {'ewma20RET', 'ewma50RET'};
 % addLags(exponentialAverageVariables, 1, crsp);
 crsp = derive(exponentialAverageVariables, crsp);
 
-buyThreshold = 0;
-sellThreshold = 0;
 
 crsp.Buy = crsp.ewma20RET_derived > buyThreshold ...
          & crsp.ewma50RET_derived > buyThreshold;
