@@ -20,23 +20,23 @@ crsp=readtable('crspComplete.csv');
 % crsp=readtable('crspCompustatMerged_2010_2014_dailyReturns.csv');
 
 % if test file...
-crsp.Properties.VariableNames{'adjustedPrice'} = 'prc';
+% crsp.Properties.VariableNames{'adjustedPrice'} = 'prc';
 
 crsp.datenum=datenum(num2str(crsp.DATE),'yyyymmdd');
 
 %% Calculate momentum size and value
-
-crsp=addLags({'ME','BE'},2,crsp);
-
-crsp.size=crsp.lag2ME;
-crsp.value=crsp.lag2BE./crsp.lag2ME;
+% 
+% crsp=addLags({'ME','BE'},2,crsp);
+% 
+% crsp.size=crsp.lag2ME;
+% crsp.value=crsp.lag2BE./crsp.lag2ME;
 
 %Calculate momentum
-crsp=addLags({'prc'},21,crsp);
-crsp=addLags({'prc'},252,crsp);
-crsp.momentum=crsp.lag21prc./crsp.lag252prc;
-
-crsp=addRank({'size','value','momentum'},crsp);
+% crsp=addLags({'prc'},21,crsp);
+% crsp=addLags({'prc'},252,crsp);
+% crsp.momentum=crsp.lag21prc./crsp.lag252prc;
+% 
+% crsp=addRank({'size','value','momentum'},crsp);
 
 params=[20, 50];
 
@@ -57,7 +57,9 @@ crsp.Buy = crsp.ewma20RET_derived > buyThreshold ...
      
 crsp.Sell = crsp.ewma20RET_derived < sellThreshold ...
           & crsp.ewma50RET_derived < sellThreshold;
-%crsp = makeWeights(crsp);
+
+crsp = makeWeights(crsp);
+
 % buy = a > 0 && b > 0;
 % sell = a < 0 && b < 0;
 dateList=unique(crsp.datenum);
