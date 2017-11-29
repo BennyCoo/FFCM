@@ -2,6 +2,8 @@ function weightedReturns=makeWeightedReturns(crsp)
     uniqueDates = unique(crsp.datenum);
     rets = zeros(length(uniqueDates), 1);
     
+    crsp.w(isnan(crsp.w)) = 0;
+    
     for i = 1 : length(uniqueDates)
         date = uniqueDates(i);
         dateidx = crsp.datenum == date;
