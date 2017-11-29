@@ -16,7 +16,7 @@
 ff3=readtable('ff3.csv');
 
 %%
-crsp=readtable('crspComplete.csv');
+crsp=readtable('crspTest.csv');
 % crsp=readtable('crspCompustatMerged_2010_2014_dailyReturns.csv');
 
 % if test file...
@@ -83,23 +83,23 @@ thisDate=thisStrategy.datenum(i);
 thisPortfolio=tradeOnSlope(thisDate,crsp);    
 thisStrategy.portfolio(i)={thisPortfolio}; %Bubble wrap the table of investment weights and store in thisStrategy
 
-if (sum(~isnan(thisPortfolio.w))>0)
+%if (sum(~isnan(thisPortfolio.w))>0)
     %Calculate returns if there's at least one valid position
-    thisStrategy.ret(i)=nansum(thisPortfolio.RET.*thisPortfolio.w);
+    %thisStrategy.ret(i)=nansum(thisPortfolio.RET.*thisPortfolio.w);
 
 
-    changePortfolio=outerjoin(thisPortfolio(:,{'PERMNO','w'}),lastPortfolio(:,{'PERMNO','w'}),'Keys','PERMNO');
+    %changePortfolio=outerjoin(thisPortfolio(:,{'PERMNO','w'}),lastPortfolio(:,{'PERMNO','w'}),'Keys','PERMNO');
     %Fill missing positions with zeros
-    changePortfolio=fillmissing( changePortfolio,'constant',0);
-    thisStrategy.turnover(i)=nansum(abs(changePortfolio.w_left-changePortfolio.w_right))/2;
+    %changePortfolio=fillmissing( changePortfolio,'constant',0);
+    %thisStrategy.turnover(i)=nansum(abs(changePortfolio.w_left-changePortfolio.w_right))/2;
 
-end
+%end
     
 for i = 2:size(thisStrategy,1)
     
     thisDate=thisStrategy.datenum(i);
     lastPortfolio=thisPortfolio;
-    thisPortfolio=tradeLongMomentum(thisDate,crsp);    
+    thisPortfolio=tradeOnSlope(thisDate,crsp);    
     thisStrategy.portfolio(i)={thisPortfolio}; %Bubble wrap the table of investment weights and store in thisStrategy
     
     if (sum(~isnan(thisPortfolio.w))>0)
@@ -108,7 +108,7 @@ for i = 2:size(thisStrategy,1)
         
         changePortfolio=outerjoin(thisPortfolio(:,{'PERMNO','w'}),lastPortfolio(:,{'PERMNO','w'}),'Keys','PERMNO');
         %Fill missing positions with zeros
-        changePortfolio=fillmissing( changePortfolio,'constant',0);
+        changePortfolio=fillmissing(changePortfolio,'constant',0);
         thisStrategy.turnover(i)=nansum(abs(changePortfolio.w_left-changePortfolio.w_right))/2;
 
     end 
