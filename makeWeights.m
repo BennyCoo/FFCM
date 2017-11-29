@@ -4,9 +4,18 @@ function crsp = makeWeights(crsp)
     
     crsp.Ownership = nan(height(crsp), 1);
     
-    idx = (crsp.PERMNO == crsp.PERMNO);
-    crsp.Ownership(idx & crsp.Buy(idx)) = 1;
-    crsp.Ownership(idx & crsp.Sell(idx)) = 0;
+    crsp.PERMNO_Lag = nan(height(crsp), 1);
+    crsp.PERMNO_Lag(2:end, 1) = crsp.PERMNO(1:end-1, 1);
+    
+    idx = (~isnan(crsp.ewma20RET_derived) & ~isnan(crsp.ewma50RET_derived));
+    
+    crsp.BuyLag = nan(height(crsp), 1);
+    crsp.SellLag = nan(height(crsp), 1);
+    crsp.BuyLag(2:end, 1) = crsp.Buy(1:end-1, 1);
+    crsp.SellLag(2:end, 1) = crsp.Sell(1:end-1, 1);
+   
+    crsp.Ownership(crsp.BuyLag(idx) == 1) = 1;
+    crsp.Ownership(crsp.SellLag(idx) == 1) = 0;
     
     % ensure that first n are non-nan because cumsum will truncate
     % otherwise
