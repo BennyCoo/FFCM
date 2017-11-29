@@ -16,7 +16,7 @@
 ff3=readtable('ff3.csv');
 
 %%
-crsp=readtable('crspTest.csv');
+crsp=readtable('crspComplete.csv');
 % crsp=readtable('crspCompustatMerged_2010_2014_dailyReturns.csv');
 
 % if test file...
@@ -57,7 +57,7 @@ crsp.Buy = crsp.ewma20RET_derived > buyThreshold ...
      
 crsp.Sell = crsp.ewma20RET_derived < sellThreshold ...
           & crsp.ewma50RET_derived < sellThreshold;
-crsp = makeWeights(crsp);
+%crsp = makeWeights(crsp);
 % buy = a > 0 && b > 0;
 % sell = a < 0 && b < 0;
 dateList=unique(crsp.datenum);
