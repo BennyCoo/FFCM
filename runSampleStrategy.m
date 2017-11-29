@@ -78,7 +78,7 @@ thisStrategy{:,'turnover'}=NaN;
 i = 1;
     
 thisDate=thisStrategy.datenum(i);
-thisPortfolio=tradeLongMomentum(thisDate,crsp);    
+thisPortfolio=tradeOnSlope(thisDate,crsp);    
 thisStrategy.portfolio(i)={thisPortfolio}; %Bubble wrap the table of investment weights and store in thisStrategy
 
 if (sum(~isnan(thisPortfolio.w))>0)
